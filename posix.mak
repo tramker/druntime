@@ -213,9 +213,13 @@ detab:
 	detab $(MANIFEST)
 	tolf $(MANIFEST)
 
+
+gitzip:
+	git archive --format=zip HEAD > druntime.zip
+
 zip: druntime.zip
 
-druntime.zip: $(MANIFEST) $(IMPORTS)
+druntime.zip: $(MANIFEST)
 	rm -rf $@
 	zip $@ $^
 
