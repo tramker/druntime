@@ -613,7 +613,7 @@ extern (C) hash_t _aaGetHash(in AA* aa, in TypeInfo tiRaw) nothrow
             continue;
         size_t[2] h2 = [b.hash, valHash(b.entry + off)];
         // use XOR here, so that hash is independent of element order
-        h ^= hashOf(h2.ptr, h2.length * h2[0].sizeof);
+        h ^= hashOf(h2);
     }
     return h;
 }
@@ -926,4 +926,16 @@ unittest
     aa3 = null;
     GC.runFinalizers((cast(char*)(&entryDtor))[0 .. 1]);
     assert(T.dtor == 6 && T.postblit == 2);
+}
+
+// test AA as key (Issue 16974)
+unittest
+{
+    int[int] a = [1 : 2], a2 = [1 : 2];
+
+    assert([a : 3] == [a : 3]);
+    assert([a : 3] == [a2 : 3]);
+
+    assert(typeid(a).getHash(&a) == typeid(a).getHash(&a));
+    assert(typeid(a).getHash(&a) == typeid(a).getHash(&a2));
 }
