@@ -114,6 +114,9 @@ unittest : $(SRCS) $(DRUNTIME)
 test_aa:
 	$(DMD) -m$(MODEL) -conf= -Isrc -defaultlib=$(DRUNTIME) -run test\aa\src\test_aa.d
 
+test_cpuid:
+	"$(MAKE)" -f test\cpuid\win64.mak "DMD=$(DMD)" MODEL=$(MODEL) "VCDIR=$(VCDIR)" DRUNTIMELIB=$(DRUNTIME) "CC=$(CC)" test
+
 test_hash:
 	$(DMD) -m$(MODEL) -conf= -Isrc -defaultlib=$(DRUNTIME) -run test\hash\src\test_hash.d
 
@@ -136,4 +139,4 @@ clean:
 
 auto-tester-build: target
 
-auto-tester-test: unittest test_aa test_hash
+auto-tester-test: unittest test_aa test_hash test_cpuid

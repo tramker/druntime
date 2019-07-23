@@ -99,6 +99,9 @@ test_uuid:
 test_aa:
 	$(DMD) -m$(MODEL) -conf= -Isrc -defaultlib=$(DRUNTIME) -run test\aa\src\test_aa.d
 
+test_cpuid:
+	"$(MAKE)" -f test\cpuid\win64.mak "DMD=$(DMD)" MODEL=$(MODEL) "VCDIR=$(VCDIR)" DRUNTIMELIB=$(DRUNTIME) "CC=$(CC)" test
+
 test_hash:
 	$(DMD) -m$(MODEL) -conf= -Isrc -defaultlib=$(DRUNTIME) -run test\hash\src\test_hash.d
 
@@ -114,7 +117,7 @@ custom_gc:
 test_loadlib:
 	$(DMD) -m$(MODEL) -conf= -Isrc -defaultlib=$(DRUNTIME) -run test\shared\src\loadlibwin.d
 
-test_all:  test_uuid test_aa test_hash test_stdcpp test_gc custom_gc test_loadlib
+test_all:  test_uuid test_aa test_cpuid test_hash test_stdcpp test_gc custom_gc test_loadlib
 
 ################### zip/install/clean ##########################
 
